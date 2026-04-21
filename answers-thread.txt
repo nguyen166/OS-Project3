@@ -1,0 +1,6 @@
+Thread 1 and Thread 2 both calculate the same bucket index i for different keys.
+Thread 1 calls insert() and reads the current head of the list table[i].
+Before Thread 1 can update table[i], it is preempted.
+Thread 2 calls insert(), reads the same original head of table[i], and successfully updates table[i] to point to its new node.
+Thread 1 resumes and updates table[i] to point to its new node.
+Result: The node added by Thread 2 is "lost" because Thread 1's update overrode the pointer, effectively skipping Thread 2's node in the linked list.
